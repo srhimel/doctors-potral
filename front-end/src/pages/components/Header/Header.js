@@ -10,6 +10,8 @@ import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
 import Container from '@mui/material/Container'
 import { NavLink } from 'react-router-dom';
+import useAuth from '../../../hooks/useAuth';
+import { Link } from '@mui/material';
 
 const Search = styled('div')(({ theme }) => ({
     position: 'relative',
@@ -53,11 +55,13 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 function Header() {
+    const { user, logOut } = useAuth();
     const NavStyle = {
         color: '#707070',
         textDecoration: 'none',
         fontSize: '1.15rem',
         fontWeight: '500',
+        cursor: 'pointer'
     }
 
     return (
@@ -120,7 +124,7 @@ function Header() {
                             <NavLink style={NavStyle} to="/appointment">Appointment</NavLink>
                             <NavLink style={NavStyle} to="/">About</NavLink>
                             <NavLink style={NavStyle} to="/">Dental Service</NavLink>
-                            <NavLink style={NavStyle} to="/account">Account</NavLink>
+                            {!user.email ? <NavLink style={NavStyle} to="/account">Account</NavLink> : <Link onClick={logOut} style={NavStyle}> Log Out</Link>}
                         </Box>
                     </Toolbar>
                 </Container>

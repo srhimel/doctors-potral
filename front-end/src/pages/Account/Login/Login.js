@@ -1,8 +1,38 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Box from '@mui/material/Box';
-import { TextField, Typography } from '@mui/material';
+import { Alert, TextField, Typography } from '@mui/material';
 import { Button } from '@mui/material';
+import useAuth from '../../../hooks/useAuth';
+import { useLocation, useNavigate } from 'react-router';
+
+import LoadingButton from '@mui/lab/LoadingButton'
+
 const Login = () => {
+    const [loginData, setLoginData] = useState({});
+    const { setError, emailSignIn, setIsLoading, error, isLoading } = useAuth();
+    const location = useLocation();
+    const navigate = useNavigate();
+    const url = location.state?.form || '/';
+
+    const handleChange = e => {
+        const field = e.target.name;
+        const value = e.target.value;
+        const newData = { ...loginData };
+        newData[field] = value;
+        setLoginData(newData);
+    }
+
+    const handleLogin = e => {
+        emailSignIn(loginData.email, loginData.password)
+            .then(() => {
+                navigate(url);
+                setError("")
+            })
+            .catch(error => setError(error.message))
+            .finally(() => setIsLoading(false));
+        e.preventDefault();
+    }
+
     return (
         <>
             <Box sx={{ textAlign: 'center', mb: 2 }}>
@@ -11,29 +41,38 @@ const Login = () => {
                     Login
                 </Typography>
             </Box>
-            <form>
+            <form onSubmit={handleLogin}>
 
                 <TextField
-                    label="Your Name"
-                    id="outlined-size-small"
-                    size="small"
+                    onChange={handleChange}
+                    name="email"
+                    required
+                    label=" Email Address"
+                    type="email"
+                    variant="standard"
                     sx={{ width: '100%', my: 1 }}
                 />
+
                 <TextField
-                    label="Phone Number"
-                    id="outlined-size-small"
-                    size="small"
+                    onChange={handleChange}
+                    name="password"
+                    required
+                    type="password"
+                    label="Password"
+                    variant="standard"
                     sx={{ width: '100%', my: 1 }}
                 />
-                <TextField
-                    label="Email Address"
-                    id="outlined-size-small"
-                    size="small"
-                    sx={{ width: '100%', my: 1 }}
-                />
+                {error && <Alert severity="warning">{error}</Alert>}
 
                 <Box sx={{ textAlign: 'right', mt: 1 }}>
-                    <Button type="submit" sx={{ boxShadow: 'none', borderRadius: 0, bgcolor: '#5FC7C7', ':hover': { bgcolor: 'info.light' } }} variant="contained">Login</Button>
+                    {
+                        isLoading ?
+                            <LoadingButton loading sx={{ width: 1, mb: 3, boxShadow: 'none', borderRadius: 0, bgcolor: '#5FC7C7', ':hover': { bgcolor: 'info.light' } }} variant="outlined">
+                                Submit
+                            </LoadingButton>
+                            :
+                            <Button type="submit" sx={{ width: 1, mb: 3, boxShadow: 'none', borderRadius: 0, bgcolor: '#5FC7C7', ':hover': { bgcolor: 'info.light' } }} variant="contained">Login</Button>
+                    }
                 </Box>
 
             </form>
