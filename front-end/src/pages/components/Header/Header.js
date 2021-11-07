@@ -120,7 +120,7 @@ function Header() {
                             <NavLink style={NavStyle} to="/appointment">Appointment</NavLink>
                             <NavLink style={NavStyle} to="/">About</NavLink>
                             <NavLink style={NavStyle} to="/">Dental Service</NavLink>
-                            <NavLink style={NavStyle} to="/">Reviews</NavLink>
+                            <NavLink style={NavStyle} to="/account">Account</NavLink>
                         </Box>
                     </Toolbar>
                 </Container>
