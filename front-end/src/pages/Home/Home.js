@@ -1,5 +1,6 @@
 import { Typography } from '@mui/material';
 import React from 'react';
+import Footer from '../components/Footer/Footer';
 import Btn from '../components/styledComponents/Btn';
 import ContentHeader from '../components/styledComponents/ContentHeader';
 import About from './About/About';
@@ -25,6 +26,7 @@ const Home = () => {
             <Services />
             <About />
             <Appoinment />
+            <Footer />
         </>
     );
 };
