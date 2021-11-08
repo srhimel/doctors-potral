@@ -20,11 +20,16 @@ const useFirebase = () => {
     const emailSignUp = (name, email, password) => {
         setIsLoading(true)
         return createUserWithEmailAndPassword(auth, email, password)
-            .then(result => {
+            .then(() => {
+                const newUser = { email, password, displayName: name }
+                setUser(newUser);
                 updateProfile(auth?.currentUser, {
                     displayName: name
                 })
-                setUser(result.user)
+                    .then(() => {
+                    })
+                    .catch((error) => setError(error.message))
+
             })
     }
     const emailSignIn = (email, password) => {
