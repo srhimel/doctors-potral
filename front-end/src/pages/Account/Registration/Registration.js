@@ -11,7 +11,7 @@ const Registration = () => {
     const { setError, emailSignUp, setIsLoading, error, isLoading } = useAuth();
     const location = useLocation();
     const navigate = useNavigate();
-    const url = location.state?.form || '/';
+    const url = location.state?.from || '/';
 
 
     const handleChange = e => {
@@ -25,7 +25,7 @@ const Registration = () => {
     const handleRegister = e => {
         emailSignUp(registerData.name, registerData.email, registerData.password)
             .then(() => {
-                navigate(url);
+                navigate(url)
                 setError("")
             })
             .catch(error => setError(error.message))

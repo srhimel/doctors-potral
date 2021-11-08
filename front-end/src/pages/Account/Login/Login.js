@@ -12,7 +12,7 @@ const Login = () => {
     const { setError, emailSignIn, setIsLoading, error, isLoading } = useAuth();
     const location = useLocation();
     const navigate = useNavigate();
-    const url = location.state?.form || '/';
+    const url = location.state?.from || '/';
 
     const handleChange = e => {
         const field = e.target.name;
