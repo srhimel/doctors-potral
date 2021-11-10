@@ -16,7 +16,22 @@ const run = async () => {
     try {
         await client.connect();
         const database = client.db("doctorPortal");
-        const bookingCollection = database.collection('bookings');
+        const appointmentCollection = database.collection('appointments');
+        // get appointments
+        app.get('/appointments', async (req, res) => {
+            const email = req.query.email;
+            const date = new Date(req.query.date);
+            const query = { email: email, date: date.toLocaleDateString() }
+            const cursor = appointmentCollection.find(query);
+            const result = await cursor.toArray();
+            res.send(result);
+        })
+        // post appointments
+        app.post('/appointments', async (req, res) => {
+            const data = req.body;
+            const result = await appointmentCollection.insertOne(data);
+            res.json(result);
+        });
     }
     finally {
         // await client.close();

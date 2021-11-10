@@ -5,6 +5,9 @@ import Appointment from './pages/Appointment/Appointment';
 import Account from './pages/Account/Account';
 import AuthProvider from './context/AuthProvider';
 import PrivateRoute from './pages/Account/PrivateRoute/PrivateRoute';
+import Dashboard from './pages/Dashboard/Dashboard';
+import Patients from './pages/Dashboard/Patients/Patients';
+import DashboardMain from './pages/Dashboard/DashboardMain';
 
 function App() {
 
@@ -15,6 +18,10 @@ function App() {
           <Route path="/" element={<Home />}></Route>
           <Route element={<PrivateRoute />}>
             <Route path="/appointment" element={<Appointment />} />
+            <Route path="/dashboard" element={<Dashboard />} >
+              <Route path="" element={<DashboardMain />} />
+              <Route path="patients" element={<Patients />} />
+            </Route>
           </Route>
 
           <Route path="/account" element={<Account />}></Route>

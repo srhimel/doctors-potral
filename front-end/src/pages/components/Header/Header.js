@@ -123,7 +123,8 @@ function Header() {
                             <NavLink style={NavStyle} to="/">Home</NavLink>
                             <NavLink style={NavStyle} to="/appointment">Appointment</NavLink>
                             <NavLink style={NavStyle} to="/">About</NavLink>
-                            <NavLink style={NavStyle} to="/">Dental Service</NavLink>
+                            {user?.email && <NavLink style={NavStyle} to="/dashboard">Dashboard</NavLink>}
+
                             {!user.email ? <NavLink style={NavStyle} to="/account">Account</NavLink> : <Link onClick={logOut} style={NavStyle}> Log Out</Link>}
                         </Box>
                     </Toolbar>
