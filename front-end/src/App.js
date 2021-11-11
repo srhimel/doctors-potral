@@ -8,6 +8,8 @@ import PrivateRoute from './pages/Account/PrivateRoute/PrivateRoute';
 import Dashboard from './pages/Dashboard/Dashboard';
 import Patients from './pages/Dashboard/Patients/Patients';
 import DashboardMain from './pages/Dashboard/DashboardMain';
+import MakeAdmin from './pages/Dashboard/MakeAdmin/MakeAdmin';
+import AdminRoute from './pages/Account/AdminRoute/AdminRoute';
 
 function App() {
 
@@ -21,6 +23,9 @@ function App() {
             <Route path="/dashboard" element={<Dashboard />} >
               <Route path="" element={<DashboardMain />} />
               <Route path="patients" element={<Patients />} />
+              <Route element={<AdminRoute></AdminRoute>}>
+                <Route path="make-admin" element={<MakeAdmin />} />
+              </Route>
             </Route>
           </Route>
 

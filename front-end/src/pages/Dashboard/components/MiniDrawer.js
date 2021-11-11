@@ -18,6 +18,7 @@ import ListItemText from '@mui/material/ListItemText';
 import InboxIcon from '@mui/icons-material/MoveToInbox';
 import MailIcon from '@mui/icons-material/Mail';
 import { NavLink } from 'react-router-dom';
+import useAuth from '../../../hooks/useAuth';
 
 const drawerWidth = 240;
 
@@ -87,6 +88,7 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 );
 
 export default function MiniDrawer({ children }) {
+    const { admin } = useAuth();
     const theme = useTheme();
     const [open, setOpen] = React.useState(true);
 
@@ -144,12 +146,29 @@ export default function MiniDrawer({ children }) {
                 </DrawerHeader>
                 <Divider />
                 <List>
+
+                    <ListItem button>
+                        <ListItemIcon>
+                            <InboxIcon />
+                        </ListItemIcon>
+                        <ListItemText as={NavLink} to="" primary={"Dashboard"} />
+
+                    </ListItem>
                     <ListItem button>
                         <ListItemIcon>
                             <InboxIcon />
                         </ListItemIcon>
                         <ListItemText as={NavLink} to="patients" primary={"Patient"} />
+
                     </ListItem>
+                    {admin && <ListItem button>
+                        <ListItemIcon>
+                            <InboxIcon />
+                        </ListItemIcon>
+                        <ListItemText as={NavLink} to="make-admin" primary={"Make Admin"} />
+
+                    </ListItem>}
+
 
                 </List>
                 <Divider />

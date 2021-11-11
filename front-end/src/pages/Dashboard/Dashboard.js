@@ -3,6 +3,7 @@ import { Outlet } from 'react-router';
 import MiniDrawer from './components/MiniDrawer';
 
 const Dashboard = () => {
+
     return (
         <div>
             <MiniDrawer>

@@ -1,20 +1,25 @@
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged, updateProfile, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import axios from "axios";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged, updateProfile, GoogleAuthProvider, signInWithPopup, getIdToken } from "firebase/auth";
 import { useEffect, useState } from "react";
 import FirebaseInit from "../firebase/firebase.init";
+
 FirebaseInit();
 
 const useFirebase = () => {
     const [user, setUser] = useState({});
     const [error, setError] = useState("");
     const [isLoading, setIsLoading] = useState(true);
-
+    const [admin, setAdmin] = useState(false);
 
     const auth = getAuth();
     const provider = new GoogleAuthProvider();
 
     const googleSinIn = () => {
         return signInWithPopup(auth, provider)
-            .then(result => setUser(result.user))
+            .then(result => {
+                setUser(result.user);
+                saveGoogleUserToDb(result.user.email, result.user.displayName)
+            })
     }
 
     const emailSignUp = (name, email, password) => {
@@ -23,6 +28,7 @@ const useFirebase = () => {
             .then(() => {
                 const newUser = { email, password, displayName: name }
                 setUser(newUser);
+                saveUserToDb(email, name);
                 updateProfile(auth?.currentUser, {
                     displayName: name
                 })
@@ -52,6 +58,8 @@ const useFirebase = () => {
             onAuthStateChanged(auth, (user) => {
                 if (user) {
                     setUser(user)
+                    getIdToken(user)
+                        .then(idToken => localStorage.setItem('idToken', idToken));
                 } else {
                     setUser({})
                 }
@@ -62,11 +70,30 @@ const useFirebase = () => {
         return unsubscribe();
     }, [auth])
 
+    const saveUserToDb = (email, displayName) => {
+        const user = { email, displayName };
+        axios.post('http://localhost:5000/users', user)
+            .then(res => { })
+            .catch(error => { })
+    }
+    const saveGoogleUserToDb = (email, displayName) => {
+        const user = { email, displayName };
+        axios.put('http://localhost:5000/users', user)
+            .then(res => { })
+            .catch(error => { })
+    }
+
+    useEffect(() => {
+        axios.get(`http://localhost:5000/users/${user?.email}`)
+            .then(res => setAdmin(res.data.admin));
+    }, [user?.email])
+
     return {
         user,
         emailSignUp,
         emailSignIn,
         setError,
+        admin,
         error,
         logOut,
         isLoading,
