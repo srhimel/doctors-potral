@@ -50,7 +50,7 @@ const BookingModal = ({ open, handleClose, slot, date }) => {
         setSnackOpen(false);
     };
     const handleBooking = e => {
-        axios.post('http://localhost:5000/appointments', bookingInfo)
+        axios.post('https://agile-journey-21867.herokuapp.com/appointments', bookingInfo)
             .then((res) => {
                 if (res.data.insertedId) {
                     setSnackOpen(true);

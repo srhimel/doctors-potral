@@ -14,7 +14,7 @@ const MakeAdmin = () => {
         setUser(newUser)
     }
     const handleAdmin = e => {
-        axios.put('http://localhost:5000/users/admin', user, {
+        axios.put('https://agile-journey-21867.herokuapp.com/users/admin', user, {
             headers: {
                 'authorization': `Bearer ${localStorage.getItem('idToken')}`
             }

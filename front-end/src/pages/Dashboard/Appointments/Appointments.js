@@ -15,7 +15,7 @@ const Appointments = ({ date }) => {
     const { user } = useAuth();
 
     useEffect(() => {
-        axios.get(`http://localhost:5000/appointments?email=${user.email}&date=${date}`)
+        axios.get(`https://agile-journey-21867.herokuapp.com/appointments?email=${user.email}&date=${date}`)
             .then(res => setAppointments(res.data))
             .catch(error => console.log(error));
     }, [user, date])

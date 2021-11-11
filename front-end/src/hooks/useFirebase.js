@@ -72,19 +72,19 @@ const useFirebase = () => {
 
     const saveUserToDb = (email, displayName) => {
         const user = { email, displayName };
-        axios.post('http://localhost:5000/users', user)
+        axios.post('https://agile-journey-21867.herokuapp.com/users', user)
             .then(res => { })
             .catch(error => { })
     }
     const saveGoogleUserToDb = (email, displayName) => {
         const user = { email, displayName };
-        axios.put('http://localhost:5000/users', user)
+        axios.put('https://agile-journey-21867.herokuapp.com/users', user)
             .then(res => { })
             .catch(error => { })
     }
 
     useEffect(() => {
-        axios.get(`http://localhost:5000/users/${user?.email}`)
+        axios.get(`https://agile-journey-21867.herokuapp.com/users/${user?.email}`)
             .then(res => setAdmin(res.data.admin));
     }, [user?.email])
 
